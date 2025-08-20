@@ -25,6 +25,7 @@ urlpatterns = [
     path('',include("website.urls")),
     path('admin/', admin.site.urls),
     path('movies/',include("movies.urls")),
+    path('clubs/',include("clubs.urls")),
 ]
 
 if settings.DEBUG:

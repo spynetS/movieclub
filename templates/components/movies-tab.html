@@ -1,0 +1,9 @@
+{% for movie in user.clubs.all.0.vote_movies.all %}
+	<div class="bg-base-200 p-5 rounded-xl flex flex-col items-center  " >
+		<img src="{{movie.poster}}" alt="Poster" class="w-56 mb-3" />
+		<div class="h-full w-full flex flex-col justify-between">
+			<p class="text-xl font-semibold mb-2">{{movie.title}}</p>
+			<p class="text-sm mb-2">{{movie.year}}</p>
+		</div>
+	</div>
+{% endfor %}

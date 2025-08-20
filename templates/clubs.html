@@ -14,15 +14,28 @@
 				<p class='text-xl'> {{user.clubs.all.0.users.count}} Members</p>
 			</div>
 
-			<div role="tablist" class="rounded-xl bg-base-300 tabs tabs-border">
-				<a role="tab" class="tab">Movies</a>
-				<a role="tab" class="tab tab-active">Voting</a>
-				<a role="tab" class="tab">Schedule</a>
+			<div role="tablist" class="bg-base-300 rounded-x tabs tabs-border mb-5">
+				<a role="tab" class="text-lg tab" hx-get="{% url 'movies-tab' %}" hx-target="#tab-content" onclick="setActiveTab(this)">Movies</a>
+				<a role="tab" class="text-lg tab tab-active" hx-get="{% url 'vote-tab' %}" hx-target="#tab-content" onclick="setActiveTab(this)">Voting</a>
+				<a role="tab" class="text-lg tab" hx-get="{% url 'vote-tab' %}" hx-target="#tab-content" onclick="setActiveTab(this)">Schedule</a>
 			</div>
 
+			<div class="grid grid-cols-4 gap-5" id="tab-content">
+				{% include "components/vote-tab.html" %}
+			</div>
 
-		</div>
-		<div class="bg-base-300">
+			<script>
+			 function setActiveTab(tab) {
+				 // Remove 'tab-active' class from all tabs
+				 const tabs = document.querySelectorAll('.tab');
+				 tabs.forEach(t => {
+					 t.classList.remove('tab-active');
+				 });
+
+				 // Add 'tab-active' class to the clicked tab
+				 tab.classList.add('tab-active');
+			 }
+			</script>
 
 		</div>
 
