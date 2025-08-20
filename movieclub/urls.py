@@ -22,8 +22,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+    path('',include("website.urls")),
     path('admin/', admin.site.urls),
-    path('',include("website.urls"))
+    path('movies/',include("movies.urls")),
 ]
 
 if settings.DEBUG:

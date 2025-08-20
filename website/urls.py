@@ -5,4 +5,5 @@ from .views import *
 urlpatterns = [
     path('', index),
     path("clubs/", lambda request: render(request, "clubs.html", {}), name="clubs"),
+    path("movies/", lambda request: render(request, "movies.html", {}), name="movies"),
 ]

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block display %}
+
+
+	<div class="container mx-auto pt-12 flex flex-col items-center ">
+
+		<form hx-push-url hx-get="{% url 'movie-search' %}" hx-trigger="keyup changed delay:500ms" hx-target="body">
+			<label class="input">
+				<svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+					<g
+						stroke-linejoin="round"
+										 stroke-linecap="round"
+										 stroke-width="2.5"
+										 fill="none"
+										 stroke="currentColor"
+					>
+						<circle cx="11" cy="11" r="8"></circle>
+						<path d="m21 21-4.3-4.3"></path>
+					</g>
+				</svg>
+				<input type="search" class="grow" name="search" placeholder="Search" value="{{search}}" />
+			</label>
+		</form>
+
+		<div class="mt-12 w-full flex flex-wrap gap-5 justify-center" >
+			{% for movie in movies %}
+				<div class="bg-base-200 p-5 rounded-xl flex flex-col w-1/6 items-center  " >
+					<img src="{{movie.Poster}}" alt="Poster" class="w-56 mb-3" />
+					<div class="h-full w-full flex flex-col justify-between">
+						<p class="text-xl font-semibold mb-2">{{movie.Title}}</p>
+						<button class="btn btn-primary w-full">
+							Add to list
+						</button>
+
+					</div>
+
+				</div>
+			{% endfor %}
+
+		</div>
+
+	</div>
+
+
+{% endblock %}
