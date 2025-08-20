@@ -12,6 +12,12 @@
 			<p class="text-xl font-bold mt-2">{{user.username}}</p>
 			<p class="text-xl font-bold mt-2">2{{user.email}}</p>
 			<p class="text-sm mt-2">Joined: {{user.date_joined}}</p>
+			<ul>
+				{% for club in user.clubs.all %}
+					<li>{{club.name}}</li>
+				{% endfor %}
+
+			</ul>
 		</div>
 		<div class="">
 			<h2 class="text-3xl font-bold mb-4">My Movies</h2>

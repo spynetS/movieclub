@@ -43,7 +43,8 @@ INSTALLED_APPS = [
 
     "accounts",
     "website",
-    "movies"
+    "movies",
+    "clubs",
 ]
 
 MIDDLEWARE = [
