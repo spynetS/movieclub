@@ -4,7 +4,7 @@
 
 	<div class="container mx-auto pt-12 flex flex-col items-center ">
 
-		<form hx-push-url hx-get="{% url 'movie-search' %}" hx-trigger="keyup changed delay:500ms" hx-target="body">
+		<form hx-push-url="true" hx-get="{% url 'movie-search' %}" hx-trigger="keyup changed delay:500ms" hx-target="#movies" class="flex flex-row gap-2">
 			<label class="input">
 				<svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 					<g
@@ -19,17 +19,25 @@
 					</g>
 				</svg>
 				<input type="search" class="grow" name="search" placeholder="Search" value="{{search}}" />
+
 			</label>
+			<input type="submit" name="" value="Search" class="btn btn-accent w-fit" />
 		</form>
 
-		<div class="mt-12 w-full flex flex-wrap gap-5 justify-center" >
+		<div class="mt-12 w-full flex flex-wrap gap-5 justify-center" id="movies" >
 			{% for movie in movies %}
 				<div class="bg-base-200 p-5 rounded-xl flex flex-col w-1/6 items-center  " >
-					<img src="{{movie.Poster}}" alt="Poster" class="w-56 mb-3" />
+					<img src="{{movie.poster}}" alt="Poster" class="w-56 mb-3" />
 					<div class="h-full w-full flex flex-col justify-between">
-						<p class="text-xl font-semibold mb-2">{{movie.Title}}</p>
-						<button class="btn btn-primary w-full">
-							Add to list
+						<p class="text-xl font-semibold mb-2">{{movie.title}}</p>
+						<p class="text-sm mb-2">{{movie.year}}</p>
+
+						<button hx-post="{% url "add-movie-to-user" movie.pk %}" class="btn btn-primary w-full">
+							{% if movie not in user.movie_list.all %}
+								Add to my list
+							{% else %}
+								Remove from my list
+							{% endif %}
 						</button>
 
 					</div>

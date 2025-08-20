@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block display %}
+	<div class="flex flex-col items-center min-h-screen w-full p-12 gap-4" >
+		<h1 class="text-4xl font-bold" >{{director.name}}</h1>
+		<table class="table table-zebra w-1/2">
+			<!-- head -->
+			<thead>
+				<tr>
+					<th></th>
+					<th>Poster</th>
+					<th>Movie title</th>
+					<th>Movie Director</th>
+					<th>Average Look</th>
+					<th>Average Script</th>
+					<th>Average Acting</th>
+					<th>Average Soundtrack</th>
+					<th>Average Overalscore</th>
+					<th>Average Bonus</th>
+					<th>Avrage Sum</th>
+				</tr>
+			</thead>
+			<tbody>
+
+
+
+			</tbody>
+		</table>
+
+		<div class='' >
+			<canvas id="myChart"></canvas>
+		</div>
+
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+		<script>
+		 function initChart() {
+			 const ctx = document.getElementById('myChart');
+			 new Chart(ctx, {
+				 type: 'line',
+				 data: {
+					 labels: [{% for movie in movies %} "{{ movie.title }}", {% endfor %}],
+					 datasets: [{
+						 label: 'Ratings for {{director.name}}\'s movies',
+						 data: [{% for movie in movies %} {% if movie.avg_total == None %} 0 {% else %} {{ movie.avg_total }} {% endif %}, {% endfor %}],
+						 borderWidth: 1
+					 }]
+				 },
+				 options: {
+					 scales: {
+						 y: {
+							 beginAtZero: true
+						 }
+					 }
+				 }
+			 });
+		 }
+
+		 // Run chart initialization on normal page load
+		 document.addEventListener("DOMContentLoaded", initChart);
+
+		 // Run chart initialization after HTMX content load (hx-boost)
+		 document.body.addEventListener("htmx:afterOnLoad", function(evt) {
+			 initChart();
+		 });
+		</script>
+	</div>
+
+{% endblock %}

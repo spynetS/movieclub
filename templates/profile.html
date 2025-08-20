@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block display %}
+
+
+	<div class="container mx-auto pt-12 grid grid-cols-2 gap-12">
+		<div class="flex flex-col items-center bg-base-200" >
+			<div class="avatar">
+				<div class="w-24 rounded-full">
+					<img src="https://img.daisyui.com/images/profile/demo/yellingcat@192.webp" />
+				</div>
+			</div>
+			<p class="text-xl font-bold mt-2">{{user.username}}</p>
+			<p class="text-xl font-bold mt-2">2{{user.email}}</p>
+			<p class="text-sm mt-2">Joined: {{user.date_joined}}</p>
+		</div>
+		<div class="">
+			<h2 class="text-3xl font-bold mb-4">My Movies</h2>
+			<ul class="list bg-neutral rounded-box shadow-md">
+
+				<!--
+					 <li class="p-4 pb-2 text-xs opacity-60 tracking-wide">Most played songs this week</li>
+				-->
+				{% for movie in user.movie_list.all %}
+				<li class="list-row" >
+						<div><img class="size-25 " src="{{movie.poster}}"/></div>
+						<div>
+							<a class="link " href="{% url 'movie' movie.imdb_id %}">
+								{{movie.title}}</a>
+							<div class="text-xs uppercase font-semibold opacity-60">{{movie.director}}</div>
+						</div>
+
+					<button hx-post="{% url "add-movie-to-user" movie.pk %}" hx-confirm="Are you sure you want to remove {{movie.title}} from your list?" class="btn btn-square btn-ghost">
+							<svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="pink" stroke="pink"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></g></svg>
+						</button>
+
+				</li>
+				{% endfor %}
+
+
+			</ul>
+		</div>
+	</div>
+
+
+
+{% endblock %}

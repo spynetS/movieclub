@@ -1,0 +1,59 @@
+
+{% extends 'base.html' %}
+
+{% block display %}
+	<div class="flex flex-row w-full relative gap-12 " >
+		<img src="{{movie.poster}}" alt="Movie poster" class="h-screen"/>
+		<div class="grid grid-cols-2 absolute left-0 w-full h-screen bg-gradient-to-l from-base-200 via-base-300 to-transparent">
+			<div>
+			</div>
+			<div class=" flex flex-col  gap-3 p-12" >
+				<h1 class="text-4xl font-bold" >{{movie.title}}</h1>
+				<div class="grid grid-cols-2" >
+					<div class="flex flex-col gap-2" >
+						<div class="grid grid-cols-3">
+							<p>Director:</p>
+							<div class="flex flex-col gap-2 col-span-2">
+								<!--
+									 {% for director in movie.directors.all %}
+									 <a href="/movie/director/{{director.name}}" class="link " >{{director.name}}</a>
+									 {% endfor %}
+								-->
+								<a href="/director/{{movie.director.name}}" class="link " >{{movie.director.name}}</a>
+
+							</div>
+
+						</div>
+						<div class="grid grid-cols-3">
+							<p>Writer:</p>
+							<div class="flex flex-col gap-2 col-span-2">
+								{% for writer in movie.writers.all %}
+								<a href="/" class="link " >{{writer.name}}</a>
+								{% endfor %}
+							</div>
+						</div>
+						<div class="flex flex-row gap-2">
+							{% for category in movie.categories.all %}
+								<a href="/account/ratings?category={{category.value}}" class="link">{{category.value}},</a>
+							{% endfor %}
+						</div>
+					</div>
+					<div>
+						<div class="mb-2">
+							<p>Average Rating</p>
+							<div class="rating">
+								{% for star in "1234567890" %}
+									{% include 'components/star.html' with rating=movie.get_average_rating.avg_total index=forloop.counter %}
+								{% endfor %}
+							</div>
+						</div>
+						<p>{{movie.release}}</p>
+
+					</div>
+				</div>
+				<div class="divider"></div>
+				<p>{{movie.plot}}</p>
+			</div>
+		</div>
+	</div>
+{% endblock %}

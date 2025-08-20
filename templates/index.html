@@ -8,11 +8,13 @@
 			<div class="bg-base-300 w-full h-42">
 			</div>
 			<p class="text-2xl font-semibold" >Polls</p>
-			<div class="bg-base-300 w-full h-32" >
+			<div class="bg-base-300 w-full flex flex-row gap-12" >
+				{% include "components/movies.html" with movies=user.movie_list.all %}
 			</div>
 
 		</div>
 		<div class="bg-base-300">
+
 
 		</div>
 

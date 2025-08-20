@@ -1,0 +1,19 @@
+{% for movie in movies %}
+	<div class="bg-base-200 p-5 rounded-xl flex flex-col w-1/6 items-center  " >
+		<img src="{{movie.poster}}" alt="Poster" class="w-56 mb-3" />
+		<div class="h-full w-full flex flex-col justify-between">
+			<p class="text-xl font-semibold mb-2">{{movie.title}}</p>
+			<p class="text-sm mb-2">{{movie.year}}</p>
+
+			<button hx-post="{% url "add-movie-to-user" movie.pk %}" class="btn btn-primary w-full">
+				{% if movie not in user.movie_list.all %}
+					Add to my list
+				{% else %}
+					Remove from my list
+				{% endif %}
+			</button>
+
+		</div>
+
+	</div>
+{% endfor %}

@@ -1,20 +1,52 @@
 {% load static %}
 <nav class="p-5 grid grid-cols-3">
-	<div class="flex flex-row items-center gap-2">
-		<img src="{% static "logo.png" %}" alt="" />
-		<p class='font-bold text-3xl'>MOVIECLUB</p>
-		<p class="font-bold text-3xl text-accent" >HUB</p>
-	</div>
+    <div class="flex flex-row items-center gap-2">
+        <img src="{% static "logo.png" %}" alt="" />
+        <p class='font-bold text-3xl'>MOVIECLUB</p>
+        <p class="font-bold text-3xl text-accent">HUB</p>
+    </div>
 
-	<div hx-boost="true" class="flex flex-row items-center justify-center gap-5" >
-		<a href="/">Dashboard</a>
-		<a href="/clubs">Club</a>
-		<a href="/movies">Movies</a>
-		<a href="#">Schedule</a>
-		<a href="#">Profile</a>
-	</div>
+    <div hx-boost="true" class="flex flex-row items-center justify-center gap-5" id="nav-links">
+        <a href="{% url 'dashboard' %}" class="nav-link">Dashboard</a>
+        <a href="{% url 'clubs' %}" class="nav-link">Club</a>
+        <a href="{% url 'movies' %}" class="nav-link">Movies</a>
+        <a href="" class="nav-link">Schedule</a>
+        <a href="{% url 'profile' %}" class="nav-link">Profile</a>
+    </div>
 
-	<div>
-	</div>
+    <div>
+    </div>
 
+    <script>
+	 document.addEventListener("DOMContentLoaded", function() {
+         // Get the current URL path
+         const currentPath = window.location.pathname;
+
+         // Get all navigation links
+         const navLinks = document.querySelectorAll('.nav-link');
+
+         // Loop through the links and add the 'active' class to the current one
+         navLinks.forEach(link => {
+             if (link.getAttribute('href') === currentPath) {
+                 link.classList.add('link-accent');
+             }
+         });
+     });
+     document.addEventListener("htmx:afterSwap", function(event) {
+         // Get the current URL path
+         const currentPath = window.location.pathname;
+
+         // Get all navigation links
+         const navLinks = document.querySelectorAll('.nav-link');
+
+         // Loop through the links and add the 'active' class to the current one
+         navLinks.forEach(link => {
+             if (link.getAttribute('href') === currentPath) {
+                 link.classList.add('link-accent');
+             } else {
+                 link.classList.remove('link-accent');
+             }
+         });
+     });
+    </script>
 </nav>
