@@ -7,8 +7,20 @@ from .views import *
 from django.db.models import Avg, F, ExpressionWrapper, FloatField
 from ratings.models import *
 
-def movie(request,imdb_id):
-    return render(request, "movie.html",{"movie":Movie.objects.get(imdb_id=imdb_id)})
+def movie(request, imdb_id):
+    movie = Movie.objects.get(imdb_id=imdb_id)
+
+    # Use tuple unpacking to get the rating object and the 'created' boolean
+    rating_object, created = Rating.objects.get_or_create(
+        user=request.user,
+        movie=movie
+    )
+
+    return render(request, "movie.html", {
+        "movie": movie,
+        "rating": rating_object,  # Pass only the rating object to the template
+    })
+
 
 def director(request,name):
     director = Director.objects.get(name=name)

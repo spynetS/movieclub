@@ -31,7 +31,7 @@
 
 					<p class="text-base-content/80 text-lg leading-relaxed mt-2">{{ user.selected_club.next_movie.plot }}</p>
 
-					<a class="btn btn-accent">
+					<a href="{% url 'movie' user.selected_club.next_movie.imdb_id %}" class="btn btn-accent">
 						Rate
 					</a>
 

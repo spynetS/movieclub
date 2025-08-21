@@ -28,7 +28,7 @@
 							<p>Writer:</p>
 							<div class="flex flex-col gap-2 col-span-2">
 								{% for writer in movie.writers.all %}
-								<a href="/" class="link " >{{writer.name}}</a>
+									<a href="/" class="link " >{{writer.name}}</a>
 								{% endfor %}
 							</div>
 						</div>
@@ -55,6 +55,65 @@
 				</div>
 				<div class="divider"></div>
 				<p>{{movie.plot}}</p>
+				<form
+					class="grid grid-cols-2 gap-4"
+					hx-post="{% url "create-or-update-rating" movie.pk %}"
+					hx-target="body"
+				>
+					<div>
+						<label for="look" class="label">
+							<span class="label-text">Cinematic Look</span>
+						</label>
+						<input type="number" id="look" step="0.01" value="{{rating.look}}" name="look" placeholder="Cinematic Look" class="input input-bordered w-full max-w-xs" />
+					</div>
+
+					<div>
+						<label for="script" class="label">
+							<span class="label-text">Script</span>
+						</label>
+						<input type="number" id="script" step="0.01" value="{{rating.script}}" name="script" placeholder="Script" class="input input-bordered w-full max-w-xs" />
+					</div>
+
+					<div>
+						<label for="acting" class="label">
+							<span class="label-text">Acting</span>
+						</label>
+						<input type="number" id="acting" step="0.01" value="{{rating.acting}}" name="acting" placeholder="Acting" class="input input-bordered w-full max-w-xs" />
+					</div>
+
+					<div>
+						<label for="soundtrack" class="label">
+							<span class="label-text">Soundtrack</span>
+						</label>
+						<input type="number" id="soundtrack" step="0.01" value="{{rating.soundtrack}}" name="soundtrack" placeholder="Soundtrack" class="input input-bordered w-full max-w-xs" />
+					</div>
+
+					<div>
+						<label for="bonus" class="label">
+							<span class="label-text">Bonus Score</span>
+						</label>
+						<input type="number" id="bonus" step="0.01" value="{{rating.bonus}}" name="bonus" placeholder="Bonus Score" class="input input-bordered w-full max-w-xs" />
+					</div>
+
+					<div>
+						<label for="overalscore" class="label">
+							<span class="label-text">Overall Score</span>
+						</label>
+						<input type="number" id="overalscore" step="0.01" value="{{rating.overalscore}}" name="overalscore" placeholder="Overall Score" class="input input-bordered w-full max-w-xs" />
+					</div>
+
+					<div class="col-span-2">
+						<label for="description" class="label">
+							<span class="label-text">Description</span>
+						</label>
+						<textarea id="description" class="textarea textarea-bordered w-full" name="description" rows="5" placeholder="Description">{{rating.description}}</textarea>
+					</div>
+
+					<div class="col-span-2">
+						<input type="submit" value="Submit" class="btn btn-primary w-full" />
+					</div>
+				</form>
+
 			</div>
 		</div>
 	</div>
