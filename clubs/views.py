@@ -59,3 +59,14 @@ def votes(request, movie_pk):
     for vote in votes:
         print(vote)
     return render(request,"components/vote-progress.html",{"votes":len(votes)/club.users.count()*100})
+
+
+def create_vote(request, club_pk):
+    club: Club = get_object_or_404(Club,pk=club_pk)
+    club.pick_votes()
+    return HttpResponse("Done")
+
+def pick_movie(request, club_pk):
+    club: Club = get_object_or_404(Club,pk=club_pk)
+    club.pick_movie()
+    return HttpResponse("Done")

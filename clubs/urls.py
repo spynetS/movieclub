@@ -12,5 +12,7 @@ urlpatterns = [
     path("schedule/<int:club_pk>/",schedule,name="schedule"),
     path("set-selected-club/",set_selected_club,name="set-selected-club"),
     path("votes/<int:movie_pk>/",votes,name="movie-votes"),
+    path("create_vote/<int:club_pk>/",create_vote,name="create_vote"),
+    path("pick_movie/<int:club_pk>/",pick_movie,name="pick_movie"),
 
 ]

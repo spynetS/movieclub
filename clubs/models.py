@@ -1,4 +1,5 @@
 from django.db import models
+from django.shortcuts import get_object_or_404
 from accounts.models import Profile
 from movies.models import Movie  # Ensure you import Movie from the correct module
 
@@ -37,9 +38,51 @@ class Club(models.Model):
         return self.name
 
     def get_voted_movie(self, user: Profile):
-        vote: Vote = Vote.objects.get(user=user, club=self)
-        return vote.movie
+        try:
+            vote: Vote = Vote.objects.get(user=user, club=self)
+            return vote.movie
+        except:
+            return None
 
-    def pick_new_movie(self):
-        # picks random movie, which hasnt been picked jet, from the mebers lists
-        pass
+    def pick_movie(self):
+        if self.vote_movies.count() <= 0:
+            raise Exception("No votes has been iniziated")
+
+        votes = Vote.objects.filter(club=self)
+        voted = {}
+        for vote in votes:
+            if str(vote.movie.pk) in voted.keys():
+                voted[str(vote.movie.pk)] = voted[str(vote.movie.pk)]+1
+            else:
+                voted[str(vote.movie.pk)] = 1
+
+        print(voted)
+        key_with_most = max(voted, key=voted.get)
+        print(key_with_most)
+        movie: Movie = get_object_or_404(Movie,pk=key_with_most)
+
+        self.next_movie = movie;
+        self.save()
+
+
+
+    def pick_votes(self):
+        # Clear any existing movies in the vote list.
+        self.vote_movies.clear()
+        votes = Vote.objects.filter(club=self).delete()
+        self.past_movies.add(self.next_movie)
+        self.next_movie = None
+
+        # Iterate over the queryset of users.
+        for member in self.users.all():
+            # Check if the user's movie list is not empty.
+            if member.movie_list.exists():
+                # Get a single random movie from the user's list.
+                random_movie = member.movie_list.order_by('?').first()
+
+                # Add the movie to the vote_movies list.
+                if random_movie:
+                    self.vote_movies.add(random_movie)
+
+        # Save the changes to the instance.
+        self.save()

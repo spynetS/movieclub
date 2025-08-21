@@ -2,3 +2,12 @@
 	<input type="datetime-local" name="next_pick" value="" class="input input-boarded" />
 	<input type="submit" name="" value="Select" class="btn btn-primary" />
 </form>
+
+{% if user.selected_club.owner.pk == user.pk %}
+	<form hx-post="{% url "create_vote" user.selected_club.pk %}" >
+		<input type="submit" name="" value="Pick voted movies" class="btn btn-primary" />
+	</form>
+	<form hx-post="{% url "pick_movie" user.selected_club.pk %}" >
+		<input type="submit" name="" value="Pick movie" class="btn btn-primary" />
+	</form>
+{% endif %}
