@@ -4,12 +4,32 @@ from django.urls import path
 from movies.models import *
 from .views import *
 
+from django.db.models import Avg, F, ExpressionWrapper, FloatField
+from ratings.models import *
+
 def movie(request,imdb_id):
     return render(request, "movie.html",{"movie":Movie.objects.get(imdb_id=imdb_id)})
 
 def director(request,name):
     director = Director.objects.get(name=name)
-    return render(request, "director.html",{"director":director,"movies":director.movies.all()})
+    movies = director.movies.all()
+        # Retrieve ratings for all movies directed by this director
+    ratings = Rating.objects.filter(movie__in=movies).annotate(
+        avg_look=Avg('look'),
+        avg_script=Avg('script'),
+        avg_acting=Avg('acting'),
+        avg_soundtrack=Avg('soundtrack'),
+        avg_overalscore=Avg('overalscore'),
+        avg_bonus=Avg('bonus'),
+        avg_total=ExpressionWrapper(
+            (F('look') + F('script') + F('acting') + F('soundtrack') + F('overalscore') + F('bonus')) / 5,
+            output_field=FloatField()
+        )
+    )
+    return render(request, "director.html",{
+        "director":director,
+        "movies":movies,
+        "ratings":ratings})
 
 def club(request):
     return render(request, "clubs.html", {})

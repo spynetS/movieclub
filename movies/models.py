@@ -96,3 +96,39 @@ class Movie(models.Model):
             self.save()
         else:
             print(f"Error fetching data: {response.status_code}")
+
+    def get_average_rating(self):
+        from ratings.models import Rating
+        from django.db.models import Avg, F, ExpressionWrapper, IntegerField
+
+        rating = Rating.objects.filter(movie=self).annotate(
+            avg_look=Avg('look'),
+            avg_script=Avg('script'),
+            avg_acting=Avg('acting'),
+            avg_soundtrack=Avg('soundtrack'),
+            avg_overalscore=Avg('overalscore'),
+            avg_bonus=Avg('bonus'),
+            avg_total=ExpressionWrapper(
+                (F('look') + F('script') + F('acting') + F('soundtrack') + F('overalscore') + F('bonus')) / 5,
+                output_field=IntegerField()
+            )
+        )[0]
+        return rating
+
+    def get_average_rating_5(self):
+        from ratings.models import Rating
+        from django.db.models import Avg, F, ExpressionWrapper, IntegerField
+
+        rating = Rating.objects.filter(movie=self).annotate(
+            avg_look=Avg('look')/ (2),
+            avg_script=Avg('script')/ (2),
+            avg_acting=Avg('acting')/ (2),
+            avg_soundtrack=Avg('soundtrack')/ (2),
+            avg_overalscore=Avg('overalscore')/ (2),
+            avg_bonus=Avg('bonus')/ (2),
+            avg_total=ExpressionWrapper(
+                (F('look') + F('script') + F('acting') + F('soundtrack') + F('overalscore') + F('bonus')) / (5*2),
+                output_field=IntegerField()
+            )
+        )[0]
+        return rating

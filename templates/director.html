@@ -21,9 +21,7 @@
 				</tr>
 			</thead>
 			<tbody>
-
-
-
+				{% include "components/ratings_rows.html" with ratings=ratings %}
 			</tbody>
 		</table>
 
@@ -42,7 +40,7 @@
 					 labels: [{% for movie in movies %} "{{ movie.title }}", {% endfor %}],
 					 datasets: [{
 						 label: 'Ratings for {{director.name}}\'s movies',
-						 data: [{% for movie in movies %} {% if movie.avg_total == None %} 0 {% else %} {{ movie.avg_total }} {% endif %}, {% endfor %}],
+						 data: [{% for movie in ratings %} {% if movie.avg_total == None %} 0 {% else %} {{ movie.avg_total }} {% endif %}, {% endfor %}],
 						 borderWidth: 1
 					 }]
 				 },
