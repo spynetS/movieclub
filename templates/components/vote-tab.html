@@ -1,14 +1,18 @@
 <p class="text-lg ">Vote for the next movie your club's going to watch</p>
 <div class="grid grid-cols-4 gap-5">
-	{% for movie in user.clubs.all.0.vote_movies.all %}
+	{% for movie in user.selected_club.vote_movies.all %}
 		<div class="bg-base-200 p-5 rounded-xl flex flex-col items-center  " >
 			<img src="{{movie.poster}}" alt="Poster" class="w-56 mb-3" />
 			<div class="h-full w-full flex flex-col justify-between">
 				<a href="{% url "movie" movie.imdb_id %}" class="link text-xl font-semibold mb-2">{{movie.title}}</a>
 				<p class="text-sm mb-2">{{movie.year}}</p>
 
-				<button hx-post="{% url "vote" user.clubs.all.0.pk movie.pk %}" class="btn btn-primary w-full">
-					Vote
+				<button hx-post="{% url "vote" user.selected_club.pk movie.pk %}" class="btn btn-primary w-full">
+					{% if movie.pk == user.get_selected_club_vote.pk %}
+						Unvote
+					{% else %}
+						Vote
+					{% endif %}
 				</button>
 
 			</div>

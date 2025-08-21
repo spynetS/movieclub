@@ -32,7 +32,9 @@
 						<div>
 							<a class="link " href="{% url 'movie' movie.imdb_id %}">
 								{{movie.title}}</a>
-							<div class="text-xs uppercase font-semibold opacity-60">{{movie.director}}</div>
+							<div class="text-xs uppercase font-semibold opacity-60">
+								<a href="{% url 'director' movie.director.name %}" class="link">{{movie.director}}</a>
+							</div>
 						</div>
 
 					<button hx-post="{% url "add-movie-to-user" movie.pk %}" hx-confirm="Are you sure you want to remove {{movie.title}} from your list?" class="btn btn-square btn-ghost">

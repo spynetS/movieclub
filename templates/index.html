@@ -5,7 +5,7 @@
 	<div class="container mx-auto pt-12 grid grid-cols-3 gap-12">
 		<div class="col-span-2 flex flex-col gap-5" >
 			<h1 class=" font-bold text-5xl mb-4">You Next Movie Night</h1>
-			<div class="bg-base-300 w-full items-center justify-center flex h-42">
+			<div class="bg-base-300 rounded-lg w-full items-center justify-center flex h-42">
 				<div class="flex gap-5">
 					<div>
 						<span class="countdown font-mono text-5xl" id="days">
@@ -35,52 +35,67 @@
 			</div>
 
 			<script>
-			 // Set the date we're counting down to
-			 const targetDate = new Date("{{ user.clubs.all.0.format_next_discussion }}").getTime(); // Change this to your target date
+			 let intervalId;
 
-			 // Update the countdown every second
-			 const countdownFunction = setInterval(() => {
-				 const now = new Date().getTime();
-				 const distance = targetDate - now;
-
-				 // Time calculations for days, hours, minutes, and seconds
-				 const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-				 const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-				 const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-				 const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-				 // Update the countdown display
-				 document.getElementById("days").children[0].style.setProperty('--value', days);
-				 document.getElementById("days").children[0].innerText = days;
-
-				 document.getElementById("hours").children[0].style.setProperty('--value', hours);
-				 document.getElementById("hours").children[0].innerText = hours;
-
-				 document.getElementById("minutes").children[0].style.setProperty('--value', minutes);
-				 document.getElementById("minutes").children[0].innerText = minutes;
-
-				 document.getElementById("seconds").children[0].style.setProperty('--value', seconds);
-				 document.getElementById("seconds").children[0].innerText = seconds;
-
-				 // If the countdown is over, display a message
-				 if (distance < 0) {
-					 clearInterval(countdownFunction);
-					 document.getElementById("days").children[0].innerText = "0";
-					 document.getElementById("hours").children[0].innerText = "0";
-					 document.getElementById("minutes").children[0].innerText = "0";
-					 document.getElementById("seconds").children[0].innerText = "0";
-					 // Optionally, display a message or take action when the countdown ends
+			 function startClock() {
+				 // Clear previous interval if it exists
+				 if (intervalId) {
+					 clearInterval(intervalId);
 				 }
-			 }, 1000);
+
+				 const targetDate = new Date("{{ user.selected_club.format_next_pick }}").getTime();
+
+				 if (isNaN(targetDate)) {
+					 // Handle invalid date case
+					 console.error("Invalid target date for countdown.");
+					 return;
+				 }
+
+				 intervalId = setInterval(() => {
+					 const now = new Date().getTime();
+					 const distance = targetDate - now;
+
+					 // Time calculations for days, hours, minutes, and seconds
+					 const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+					 const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+					 const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+					 const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+					 // Update the countdown display
+					 // (Your existing code to update the DOM elements)
+					 document.getElementById("days").children[0].style.setProperty('--value', days);
+					 document.getElementById("days").children[0].innerText = days;
+
+					 document.getElementById("hours").children[0].style.setProperty('--value', hours);
+					 document.getElementById("hours").children[0].innerText = hours;
+
+					 document.getElementById("minutes").children[0].style.setProperty('--value', minutes);
+					 document.getElementById("minutes").children[0].innerText = minutes;
+
+					 document.getElementById("seconds").children[0].style.setProperty('--value', seconds);
+					 document.getElementById("seconds").children[0].innerText = seconds;
+
+					 // If the countdown is over, stop it and reset the values
+					 if (distance < 0) {
+						 clearInterval(countdownFunction);
+						 document.getElementById("days").children[0].innerText = "0";
+						 document.getElementById("hours").children[0].innerText = "0";
+						 document.getElementById("minutes").children[0].innerText = "0";
+						 document.getElementById("seconds").children[0].innerText = "0";
+					 }
+				 }, 1000);
+			 }
+			 startClock()
 			</script>
+
 			<p class="text-2xl font-semibold" >Polls</p>
-			<div class="bg-base-300 w-full flex flex-row gap-12" >
-				{% include "components/movies.html" with movies=user.movie_list.all %}
+			<div class="bg-base-300 rounded-lg w-full flex flex-col" >
+				{% include "components/movies-votes.html" with movies=user.selected_club.vote_movies.all %}
 			</div>
 
 		</div>
-		<div class="bg-base-300">
-
+		<div class="bg-base-300 rounded-lg p-6">
+			<h2 class="text-3xl font-bold">Best rated movie</h2>
 
 		</div>
 

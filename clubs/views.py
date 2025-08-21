@@ -1,5 +1,5 @@
 from django import forms
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 
 from clubs.models import *
@@ -24,23 +24,38 @@ def vote(request, club_pk, movie_pk):
 
     return HttpResponse("unvote")
 
-class SetDiscussionForm(forms.ModelForm):
+class SetPickForm(forms.ModelForm):
     class Meta:
         model = Club
-        fields = ['next_discussion']  # Only include the next_discussion field
+        fields = ['next_pick']  # Only include the next_pick field
         widgets = {
-            'next_discussion': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+            'next_pick': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
         }
 
 def schedule(request, club_pk):
     club = get_object_or_404(Club, pk=club_pk)
 
     if request.method == 'POST':
-        form = SetDiscussionForm(request.POST, instance=club)
+        form = SetPickForm(request.POST, instance=club)
         if form.is_valid():
             form.save()  # Save the updated club instance
             return redirect('/', club_pk=club.pk)  # Redirect to the club detail page
     else:
-        form = SetDiscussionForm(instance=club)  # Pre-fill the form with the current club data
+        form = SetPickForm(instance=club)  # Pre-fill the form with the current club data
 
     return render(request, 'yes', {})
+
+def set_selected_club(request):
+    user: Profile = request.user
+    club: Club = Club.objects.get(pk=int(request.POST['selected_club']))
+    user.selected_club = club
+    user.save()
+    return redirect(request.POST['current_path'])
+
+def votes(request, movie_pk):
+    movie: Movie = Movie.objects.get(pk=movie_pk)
+    club: Club = request.user.selected_club
+    votes = Vote.objects.filter(movie=movie, club=club)
+    for vote in votes:
+        print(vote)
+    return render(request,"components/vote-progress.html",{"votes":len(votes)/club.users.count()*100})

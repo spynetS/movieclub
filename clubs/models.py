@@ -24,17 +24,21 @@ class Club(models.Model):
     users = models.ManyToManyField(Profile, related_name='clubs', blank=True)  # Users in the club
     owner = models.ForeignKey(Profile,on_delete=models.CASCADE,related_name="my_club",null=True,blank=True)
 
-    next_discussion = models.DateTimeField(null=True, blank=True)  # Date and time of the next discussion
+    next_pick = models.DateTimeField(null=True, blank=True)  # Date and time of the next pick
 
-    def format_next_discussion(self):
-        # Check if next_discussion is set
-        if self.next_discussion:
+    def format_next_pick(self):
+        # Check if next_pick is set
+        if self.next_pick:
             # Format the date and time
-            return  self.next_discussion.isoformat()
-        return "No upcoming discussion"
+            return self.next_pick.isoformat()
+        return "No upcoming pick"
 
     def __str__(self):
         return self.name
+
+    def get_voted_movie(self, user: Profile):
+        vote: Vote = Vote.objects.get(user=user, club=self)
+        return vote.movie
 
     def pick_new_movie(self):
         # picks random movie, which hasnt been picked jet, from the mebers lists

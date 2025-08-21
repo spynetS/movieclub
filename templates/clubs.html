@@ -2,16 +2,12 @@
 {% block display %}
 
 
-	<div class="container mx-auto pt-12 ">
+	<div class="container mx-auto pt-12 min-h-screen">
 		<div class="col-span-2 flex flex-col gap-5" >
 			<div class="p-12 bg-base-200 w-full h-42 rounded-xl">
-				{% if user.clubs.all %}
-					<p class='text-5xl mb-4'>{{ user.clubs.all.0.name }}</p>
-				{% else %}
-					<p class='text-5xl mb-4'>No clubs found.</p>
-				{% endif %}
+				<p class='text-5xl mb-4'>{{ user.selected_club.name }}</p>
 
-				<p class='text-xl'> {{user.clubs.all.0.users.count}} Members</p>
+				<p class='text-xl'> {{user.selected_club.users.count}} Members</p>
 			</div>
 
 			<div role="tablist" class="bg-base-300 rounded-x tabs tabs-border mb-5">

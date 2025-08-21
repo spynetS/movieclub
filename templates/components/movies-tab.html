@@ -1,10 +1,10 @@
 <div class="flex flex-col gap-2">
 
-{% for movie in user.clubs.all.0.vote_movies.all %}
+{% for movie in user.selected_club.vote_movies.all %}
 	<div class="bg-base-200 p-3 rounded-xl flex flex-row items-center gap-12  " >
 		<img src="{{movie.poster}}" alt="Poster" class="w-18 mb-3" />
 		<div class="h-full w-full flex flex-col justify-between">
-			<p class="text-xl font-semibold mb-2">{{movie.title}}</p>
+			<a href="{% url 'movie' movie.imdb_id %}" class="link text-xl font-semibold mb-2">{{movie.title}}</a>
 			<p class="text-sm mb-2">{{movie.year}}</p>
 			<div class="rating">
 				{% for star in "1234567890" %}

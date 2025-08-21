@@ -14,7 +14,27 @@
         <a href="{% url 'profile' %}" class="nav-link">Profile</a>
     </div>
 
-    <div>
+    <div class="flex justify-center items-center">
+        <form hx-push-url="true" hx-on::after-swap="startClock()" hx-post="{% url "set-selected-club" %}" hx-trigger="input" hx-target="body">
+            <select name="selected_club" class="select">
+                <option disabled selected>
+                    Select club to be active
+                </option>
+                {% for club in user.clubs.all %}
+                    {% if club.pk == user.selected_club.pk %}
+                        <option value="{{club.pk}}">
+                            {{club}}
+                        </option>
+                    {% else %}
+                        <option value="{{club.pk}}">
+                            {{club}}
+                        </option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+            <input type="text" name="current_path" class="hidden" value="{{request.path}}" />
+        </form>
+        
     </div>
 
     <script>
