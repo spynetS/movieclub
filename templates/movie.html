@@ -43,7 +43,9 @@
 							<p>Average Rating</p>
 							<div class="rating">
 								{% for star in "1234567890" %}
-									{% include 'components/star.html' with rating=movie.get_average_rating.avg_total index=forloop.counter %}
+									{% if movie.get_average_rating %}
+										{% include 'components/star.html' with rating=movie.get_average_rating.avg_total index=forloop.counter %}
+									{% endif %}
 								{% endfor %}
 							</div>
 						</div>

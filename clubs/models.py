@@ -24,6 +24,15 @@ class Club(models.Model):
     users = models.ManyToManyField(Profile, related_name='clubs', blank=True)  # Users in the club
     owner = models.ForeignKey(Profile,on_delete=models.CASCADE,related_name="my_club",null=True,blank=True)
 
+    next_discussion = models.DateTimeField(null=True, blank=True)  # Date and time of the next discussion
+
+    def format_next_discussion(self):
+        # Check if next_discussion is set
+        if self.next_discussion:
+            # Format the date and time
+            return  self.next_discussion.isoformat()
+        return "No upcoming discussion"
+
     def __str__(self):
         return self.name
 

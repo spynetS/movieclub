@@ -1,9 +1,19 @@
+<div class="flex flex-col gap-2">
+
 {% for movie in user.clubs.all.0.vote_movies.all %}
-	<div class="bg-base-200 p-5 rounded-xl flex flex-col items-center  " >
-		<img src="{{movie.poster}}" alt="Poster" class="w-56 mb-3" />
+	<div class="bg-base-200 p-3 rounded-xl flex flex-row items-center gap-12  " >
+		<img src="{{movie.poster}}" alt="Poster" class="w-18 mb-3" />
 		<div class="h-full w-full flex flex-col justify-between">
 			<p class="text-xl font-semibold mb-2">{{movie.title}}</p>
 			<p class="text-sm mb-2">{{movie.year}}</p>
+			<div class="rating">
+				{% for star in "1234567890" %}
+					{% if movie.get_average_rating %}
+						{% include 'components/star.html' with rating=movie.get_average_rating.avg_total index=forloop.counter %}
+					{% endif %}
+				{% endfor %}
+			</div>
 		</div>
 	</div>
 {% endfor %}
+</div>
