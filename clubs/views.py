@@ -58,7 +58,7 @@ def votes(request, movie_pk):
     votes = Vote.objects.filter(movie=movie, club=club)
     for vote in votes:
         print(vote)
-    return render(request,"components/vote-progress.html",{"votes":len(votes)/club.users.count()*100})
+    return render(request,"components/vote-progress.html",{"votes":int(len(votes)/club.users.count()*100)})
 
 
 def create_vote(request, club_pk):

@@ -22,7 +22,6 @@
 		<div class="">
 			<h2 class="text-3xl font-bold mb-4">My Movies</h2>
 			<ul class="list bg-neutral rounded-box shadow-md">
-
 				<!--
 					 <li class="p-4 pb-2 text-xs opacity-60 tracking-wide">Most played songs this week</li>
 				-->
@@ -33,7 +32,9 @@
 							<a class="link " href="{% url 'movie' movie.imdb_id %}">
 								{{movie.title}}</a>
 							<div class="text-xs uppercase font-semibold opacity-60">
+								{% if movie.director %}
 								<a href="{% url 'director' movie.director.name %}" class="link">{{movie.director}}</a>
+								{% endif %}
 							</div>
 						</div>
 
