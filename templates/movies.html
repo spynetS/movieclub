@@ -4,7 +4,7 @@
 
 	<div class="container mx-auto pt-12 flex flex-col items-center ">
 
-		<form hx-push-url="true" hx-get="{% url 'movie-search' %}" hx-trigger="keyup changed delay:500ms" hx-target="#movies" class="flex flex-row gap-2">
+		<form hx-push-url="true" hx-get="{% url 'movie-search' %}" hx-trigger="keyup changed delay:500ms, submit" hx-target="#movies" class="flex flex-row gap-2">
 			<label class="input">
 				<svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 					<g
