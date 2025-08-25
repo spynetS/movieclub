@@ -48,6 +48,7 @@ def club(request):
 
 urlpatterns = [
     path('', index, name="dashboard"),
+
     path("clubs/", club, name="clubs"),
     path("movies/", lambda request: render(request, "movies.html", {}), name="movies"),
     path("profile/", lambda request: render(request, "profile.html", {}), name="profile"),

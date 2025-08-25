@@ -5,6 +5,8 @@ from clubs.models import Club
 
 # Create your views here.
 def index(request):
+    if request.user.is_authenticated:
+        return render(request, "dashboard.html",{})
     return render(request, "index.html",{})
 
 def add_member_modal(request):

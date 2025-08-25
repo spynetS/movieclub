@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Sign up{% endblock %}
+
+{% block content %}
+<div class="flex justify-center">
+  <div class="card w-full md:w-96 shadow-xl">
+    <div class="card-body">
+      <h2 class="card-title">Create account</h2>
+
+      {% if form.non_field_errors %}
+        <div class="alert alert-error">
+          <ul>
+            {% for err in form.non_field_errors %}
+              <li>{{ err }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+
+      <form method="post" novalidate>
+        {% csrf_token %}
+
+        <div class="form-control">
+          <label class="label"><span class="label-text">Username</span></label>
+          {{ form.username }}
+          {% if form.username.errors %}
+            <label class="label">
+              <span class="label-text-alt text-error">{{ form.username.errors|join:", " }}</span>
+            </label>
+          {% endif %}
+        </div>
+
+        <div class="form-control">
+          <label class="label"><span class="label-text">Email</span></label>
+          {{ form.email }}
+          {% if form.email.errors %}
+            <label class="label">
+              <span class="label-text-alt text-error">{{ form.email.errors|join:", " }}</span>
+            </label>
+          {% endif %}
+        </div>
+
+        <div class="form-control">
+          <label class="label"><span class="label-text">Password</span></label>
+          {{ form.password1 }}
+          {% if form.password1.errors %}
+            <label class="label">
+              <span class="label-text-alt text-error">{{ form.password1.errors|join:", " }}</span>
+            </label>
+          {% endif %}
+        </div>
+
+        <div class="form-control">
+          <label class="label"><span class="label-text">Confirm Password</span></label>
+          {{ form.password2 }}
+          {% if form.password2.errors %}
+            <label class="label">
+              <span class="label-text-alt text-error">{{ form.password2.errors|join:", " }}</span>
+            </label>
+          {% endif %}
+        </div>
+
+        <div class="form-control">
+          <label class="label"><span class="label-text">Bio (optional)</span></label>
+          {{ form.bio }}
+          {% if form.bio.errors %}
+            <label class="label">
+              <span class="label-text-alt text-error">{{ form.bio.errors|join:", " }}</span>
+            </label>
+          {% endif %}
+        </div>
+
+        <div class="form-control mt-4">
+          <button type="submit" class="btn btn-primary w-full">Sign up</button>
+        </div>
+
+        <p class="text-sm text-center mt-4">Already have an account? <a class="link" href="{% url 'login' %}">Log in</a></p>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,147 +1,153 @@
 {% extends "base.html" %}
-{% block display %}
+{% load static %}
 
+{% block title %}MovieClub — Watch, Vote, Repeat{% endblock %}
 
-	<div class="container mx-auto pt-12 grid grid-cols-3 gap-12">
+{% block content %}
+<section class="hero min-h-screen bg-base-200">
+  <div class="hero-content flex-col lg:flex-row-reverse gap-12">
+    <!-- Illustration / mockup -->
+    <div class="w-full lg:w-1/2 flex justify-center">
+      <!-- simple film reels illustration -->
+      <div class="mockup-phone shadow-lg">
+        <div class="camera"></div>
+        <div class="display p-4 bg-black/80">
+          <div class="h-64 w-40 rounded-lg overflow-hidden bg-gradient-to-b from-slate-800 to-slate-900 flex items-center justify-center">
+            <div class="text-center text-white p-3">
+              <svg xmlns="http://www.w3.org/2000/svg" class="inline-block mb-2" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><path d="M7 21h10"></path><path d="M7 7v2"></path><path d="M17 7v2"></path></svg>
+              <div class="font-semibold">MovieClub</div>
+              <div class="text-xs opacity-80">Friends · Vote · Watch</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-		<div class=" col-span-2 flex flex-col gap-3" >
-			<h1 class=" font-bold text-4xl">You Next Movie Night</h1>
+    <!-- Text content -->
+    <div class="w-full lg:w-1/2">
+      <h1 class="text-4xl md:text-5xl font-bold">Turn your friend group into a movie club</h1>
+      <p class="py-6 text-lg text-base-content/80">Create clubs, share each member's movie lists, and take turns voting on randomized suggestions — the winning movie is what you watch next. Simple, democratic, and fun.</p>
 
+      <div class="flex flex-col sm:flex-row gap-3 md:gap-6">
+        <a href="{% url 'signup' %}" class="btn btn-primary btn-lg">Create a club — it’s free</a>
+        <a href="{% url 'login' %}" class="btn btn-ghost btn-lg">Log in</a>
+      </div>
 
-			{% if user.selected_club.next_movie %}
+      <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="card bg-base-100 shadow-sm">
+          <div class="card-body p-4">
+            <h3 class="font-bold">How it works</h3>
+            <ol class="list-decimal list-inside text-sm mt-2 space-y-1 text-base-content/80">
+              <li>Each member adds movies to their personal list.</li>
+              <li>The club aggregates lists and randomly suggests candidates.</li>
+              <li>Members vote — the top pick is the next movie night choice.</li>
+            </ol>
+          </div>
+        </div>
 
-			<div class="bg-base-300 rounded-xl p-6 flex flex-col md:flex-row items-center md:items-start gap-6 shadow-xl">
-				<div class="flex-shrink-0 w-48 h-full overflow-hidden rounded-lg shadow-md">
-					<img src="{{ user.selected_club.next_movie.poster }}" alt="{{ user.selected_club.next_movie.title }} poster" class="w-full h-full object-cover">
-				</div>
+        <div class="card bg-base-100 shadow-sm">
+          <div class="card-body p-4">
+            <h3 class="font-bold">Why it’s fun</h3>
+            <ul class="list-disc list-inside text-sm mt-2 space-y-1 text-base-content/80">
+              <li>Discover movies your friends love.</li>
+              <li>Fair voting keeps things democratic.</li>
+              <li>Quick setup — ready in minutes.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
 
-				<div class="flex-1 flex flex-col gap-3 text-center md:text-left">
-					<h2 class="text-4xl font-extrabold text-base-content leading-tight">
-						<a href="{% url 'movie' user.selected_club.next_movie.imdb_id %}" class="link link-hover">{{ user.selected_club.next_movie.title }}</a>
-					</h2>
-					{% if user.selected_club.next_movie.imdb_rating %}
-						<div class="flex items-center justify-center md:justify-start mt-4">
-							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-warning mr-2">
-								<path fill-rule="evenodd" d="M10.788 3.212a.75.75 0 0 0-.58.113l-4.404 2.876A.75.75 0 0 1 5 6.273V19.5a.75.75 0 0 0 1.055.656L12 16.513l5.945 3.643A.75.75 0 0 0 19 19.5V6.273a.75.75 0 0 0-.208-.58l-4.404-2.876a.75.75 0 0 0-.58-.113ZM12 15a.75.75 0 0 0 .75-.75V8.5h1.25a.75.75 0 0 0 0-1.5H12.75A.75.75 0 0 0 12 6.25V5a.75.75 0 0 0-1.5 0v1.25a.75.75 0 0 0-.75.75h-.25a.75.75 0 0 0 0 1.5h.25a.75.75 0 0 0 .75.75V15Z" clip-rule="evenodd" />
-							</svg>
-							<span class="text-lg font-bold">{{ user.selected_club.next_movie.imdb_rating }} / 10</span>
-						</div>
-					{% endif %}
-					<p class="text-xl font-medium text-base-content/75">{{ user.selected_club.next_movie.release_date|date:"Y" }}</p>
+      <div class="mt-6">
+        <a href="#features" class="link">Explore features ↓</a>
+      </div>
+    </div>
+  </div>
+</section>
 
-					<p class="text-base-content/80 text-lg leading-relaxed mt-2">{{ user.selected_club.next_movie.plot }}</p>
+<!-- Features section -->
+<section id="features" class="py-12">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-3xl font-bold text-center">Features that make movie nights easier</h2>
+    <p class="text-center mt-2 text-base-content/70">Everything you need to pick, vote, and enjoy the next watch together.</p>
 
-					<a href="{% url 'movie' user.selected_club.next_movie.imdb_id %}" class="btn btn-accent">
-						Rate
-					</a>
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="card bg-base-100 shadow hover:shadow-lg transition">
+        <div class="card-body">
+          <h3 class="card-title">Shared movie lists</h3>
+          <p class="text-sm text-base-content/80">Each member keeps their own list — the club aggregates suggestions from everyone.</p>
+        </div>
+      </div>
 
+      <div class="card bg-base-100 shadow hover:shadow-lg transition">
+        <div class="card-body">
+          <h3 class="card-title">Randomized picks</h3>
+          <p class="text-sm text-base-content/80">We randomize candidates so the same people don't always pick — fairness + discovery.</p>
+        </div>
+      </div>
 
-				</div>
-			</div>
-			{% else %}
+      <div class="card bg-base-100 shadow hover:shadow-lg transition">
+        <div class="card-body">
+          <h3 class="card-title">Club voting</h3>
+          <p class="text-sm text-base-content/80">Vote on the candidates — simple up/down voting or score votes (configurable).</p>
+        </div>
+      </div>
+    </div>
 
-			<div class="bg-base-300 rounded-lg w-full items-center justify-center flex h-42">
-				<div class="flex gap-5">
-					<div>
-						<span class="countdown font-mono text-5xl" id="days">
-							<span style="--value:0;" aria-live="polite" aria-label="0">0</span>
-						</span>
-						days
-					</div>
-					<div>
-						<span class="countdown font-mono text-5xl" id="hours">
-							<span style="--value:0;" aria-live="polite" aria-label="0">0</span>
-						</span>
-						hours
-					</div>
-					<div>
-						<span class="countdown font-mono text-5xl" id="minutes">
-							<span style="--value:0;" aria-live="polite" aria-label="0">0</span>
-						</span>
-						min
-					</div>
-					<div>
-						<span class="countdown font-mono text-5xl" id="seconds">
-							<span style="--value:0;" aria-live="polite" aria-label="0">0</span>
-						</span>
-						sec
-					</div>
-				</div>
-			</div>
-			{% endif %}
+    <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+      <div class="prose max-w-none">
+        <h3 class="text-2xl font-semibold">Start a club in seconds</h3>
+        <p class="text-base-content/80">Create a club, invite friends with a link, and have everyone import or add movies. We show candidate movies pulled from members' lists and keep voting transparent.</p>
+        <ul class="list-inside list-disc mt-4 text-base-content/80">
+          <li>Invite-only clubs with role management</li>
+          <li>Public clubs you can join</li>
+          <li>Optionally sync with external movie services (coming soon)</li>
+        </ul>
 
-			<script>
-			 let intervalId;
+        <div class="mt-6">
+          <a href="{% url 'signup' %}" class="btn btn-primary">Create your club</a>
+        </div>
+      </div>
 
-			 function startClock() {
-				 // Clear previous interval if it exists
-				 if (intervalId) {
-					 clearInterval(intervalId);
-				 }
+      <div>
+        <!-- example movie candidate cards -->
+        <div class="space-y-4">
+          {% comment %} Replace with a loop of real movies when integrated {% endcomment %}
+          <div class="card card-side bg-base-100 shadow">
+            <figure class="w-28"><img src="https://placehold.co/112x160?text=Poster" alt="poster"/></figure>
+            <div class="card-body">
+              <h4 class="font-semibold">The Example Movie</h4>
+              <p class="text-sm text-base-content/70">Added by: alice — 7.8/10</p>
+              <div class="card-actions justify-end">
+                <button class="btn btn-sm">Vote</button>
+              </div>
+            </div>
+          </div>
 
-				 const targetDate = new Date("{{ user.selected_club.format_next_pick }}").getTime();
+          <div class="card card-side bg-base-100 shadow">
+            <figure class="w-28"><img src="https://placehold.co/112x160?text=Poster" alt="poster"/></figure>
+            <div class="card-body">
+              <h4 class="font-semibold">A Friendly Comedy</h4>
+              <p class="text-sm text-base-content/70">Added by: bob — 6.9/10</p>
+              <div class="card-actions justify-end">
+                <button class="btn btn-sm btn-outline">Vote</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-				 if (isNaN(targetDate)) {
-					 // Handle invalid date case
-					 console.error("Invalid target date for countdown.");
-					 return;
-				 }
-
-				 intervalId = setInterval(() => {
-					 const now = new Date().getTime();
-					 const distance = targetDate - now;
-
-					 // Time calculations for days, hours, minutes, and seconds
-					 const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-					 const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-					 const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-					 const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-					 // Update the countdown display
-					 // (Your existing code to update the DOM elements)
-					 document.getElementById("days").children[0].style.setProperty('--value', days);
-					 document.getElementById("days").children[0].innerText = days;
-
-					 document.getElementById("hours").children[0].style.setProperty('--value', hours);
-					 document.getElementById("hours").children[0].innerText = hours;
-
-					 document.getElementById("minutes").children[0].style.setProperty('--value', minutes);
-					 document.getElementById("minutes").children[0].innerText = minutes;
-
-					 document.getElementById("seconds").children[0].style.setProperty('--value', seconds);
-					 document.getElementById("seconds").children[0].innerText = seconds;
-
-					 // If the countdown is over, stop it and reset the values
-					 if (distance < 0) {
-						 clearInterval(countdownFunction);
-						 document.getElementById("days").children[0].innerText = "0";
-						 document.getElementById("hours").children[0].innerText = "0";
-						 document.getElementById("minutes").children[0].innerText = "0";
-						 document.getElementById("seconds").children[0].innerText = "0";
-					 }
-				 }, 1000);
-			 }
-			 startClock()
-			</script>
-
-			<p class="text-2xl font-semibold" >Polls</p>
-			{% if user.selected_club.next_movie %}
-			{% else %}
-				<a href="{% url "clubs" %}" class="btn btn-accent w-fit">Vote for the movie you want to watch</a>
-			{% endif %}
-
-			<div class="bg-base-300 rounded-lg w-full flex flex-col" >
-				{% include "components/movies-votes.html" with movies=user.selected_club.vote_movies.all %}
-			</div>
-
-		</div>
-		<div class="bg-base-300 rounded-lg p-6">
-			<h2 class="text-3xl font-bold">Best rated movie</h2>
-
-		</div>
-
-	</div>
-
-
-
+<!-- CTA footer -->
+<section class="py-12 bg-base-100">
+  <div class="max-w-4xl mx-auto text-center">
+    <h3 class="text-2xl font-bold">Ready to make your next movie night effortless?</h3>
+    <p class="mt-3 text-base-content/70">Create a club, invite friends, and let the voting begin.</p>
+    <div class="mt-6 flex justify-center gap-4">
+      <a href="{% url 'signup' %}" class="btn btn-primary">Get started — it’s free</a>
+      <a href="{% url 'login' %}" class="btn btn-ghost">I already have an account</a>
+    </div>
+  </div>
+</section>
 {% endblock %}
