@@ -1,13 +1,25 @@
-<form hx-post="{% url "schedule" user.selected_club.pk %}" >
-	<input type="datetime-local" name="next_pick" value="" class="input input-boarded" />
-	<input type="submit" name="" value="Select" class="btn btn-primary" />
-</form>
+<div class="card bg-base-100 shadow-xl p-6 mb-6">
+  <div class="card-body">
+    <h2 class="card-title text-center mb-4">Admin Actions</h2>
 
-{% if user.selected_club.owner.pk == user.pk %}
-	<form hx-post="{% url "create_vote" user.selected_club.pk %}" >
-		<input type="submit" name="" value="Pick voted movies" class="btn btn-primary" />
-	</form>
-	<form hx-post="{% url "pick_movie" user.selected_club.pk %}" >
-		<input type="submit" name="" value="Pick movie" class="btn btn-primary" />
-	</form>
-{% endif %}
+    <form hx-push-url="true" hx-post="{% url 'schedule' user.selected_club.pk %}" hx-target="body" class="flex flex-col md:flex-row items-center gap-4">
+      <label for="next_pick" class="form-label font-semibold whitespace-nowrap">Schedule a Movie Night:</label>
+      <input type="datetime-local" id="next_pick" name="next_pick" class="input input-bordered w-full" />
+      <input type="submit" value="Set Date" class="btn btn-primary w-full md:w-auto" />
+    </form>
+
+    <hr class="my-6">
+
+    {% if user.selected_club.owner.pk == user.pk %}
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+        <form hx-post="{% url 'create_vote' user.selected_club.pk %}">
+          <input type="submit" value="Pick Voted Movies" class="btn btn-secondary w-full" />
+        </form>
+        <form hx-post="{% url 'pick_movie' user.selected_club.pk %}">
+          <input type="submit" value="Pick a Random Movie" class="btn btn-accent w-full" />
+        </form>
+      </div>
+    {% endif %}
+
+  </div>
+</div>

@@ -135,3 +135,6 @@ class Movie(models.Model):
             )
         )[0]
         return rating
+
+    def large_poster(self):
+        return self.poster.replace("300","700")

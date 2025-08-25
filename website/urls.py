@@ -52,5 +52,6 @@ urlpatterns = [
     path("movies/", lambda request: render(request, "movies.html", {}), name="movies"),
     path("profile/", lambda request: render(request, "profile.html", {}), name="profile"),
     path("movie/<str:imdb_id>",movie,name="movie"),
-    path("director/<str:name>",director, name="director")
+    path("director/<str:name>",director, name="director"),
+    path("add-member-modal", add_member_modal, name="add-member-modal")
 ]

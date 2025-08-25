@@ -1,0 +1,39 @@
+<dialog id="my_modal_1" open="true" class="modal">
+	<div class="modal-box">
+		<form hx-get="{% url 'add-member-modal' %}" hx-target="#my_modal_1" hx-swap="outerHTML">
+			<input type="text" name="search" value="" class="input input-bordered"  placeholder="search"/>
+			<input type="submit" name="" value="Search" class="btn btn-primary" />
+		</form>
+		<ul class="w-full mt-2" id="list">
+			{% for member in users %}
+				<li class="w-full flex flex-row justify-between">
+					{{member.username}}
+					{% include "components/toggle_membership_button.html" with member=member %}
+				</li>
+			{% endfor %}
+		</ul>
+		<div class="modal-action">
+
+			<form method="dialog">
+				<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+			</form>
+		</div>
+	</div>
+	<script>
+function triggerReloadOnAll() {
+    document.querySelectorAll(".reload").forEach(el => {
+        const event = new Event("reload", { bubbles: true });
+        el.dispatchEvent(event);
+    });
+	 }
+
+	 document.querySelectorAll(".toggle-member").forEach(btn => {
+		 btn.addEventListener("htmx:afterRequest", (evt) => {
+			 if (evt.detail.successful) {
+				 console.log("reload")
+				 triggerReloadOnAll()
+			 }
+		 });
+	 });
+	</script>
+</dialog>

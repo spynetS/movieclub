@@ -2,7 +2,11 @@
 	<div class="p-2 rounded-xl flex flex-row w-full items-center gap-12  " >
 		<img src="{{movie.poster}}" alt="Poster" class="size-16 mb-3" />
 		<div class="h-full w-full flex flex-row items-center justify-between">
-			<a href="{% url 'movie' movie.imdb_id %}" class="link text-xl font-bold mb-2">{{movie.title}}</a>
+
+			<div class="w-1/2 " >
+				<a href="{% url 'movie' movie.imdb_id %}" class="link text-xl font-bold mb-2">{{movie.title}}</a>
+				<p class="text-sm line-clamp-3 mb-2">{{movie.plot}}</a>
+			</div>
 
 			<div hx-get="{% url 'movie-votes' movie.pk %}" hx-trigger="load">
 			</div>

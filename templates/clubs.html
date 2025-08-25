@@ -14,6 +14,9 @@
 				<a role="tab" class="text-lg tab" hx-get="{% url 'movies-tab' %}" hx-target="#tab-content" onclick="setActiveTab(this)">Past Movies</a>
 				<a role="tab" class="text-lg tab tab-active" hx-get="{% url 'vote-tab' %}" hx-target="#tab-content" onclick="setActiveTab(this)">Voting</a>
 				<a role="tab" class="text-lg tab" hx-get="{% url 'schedule-tab' %}" hx-target="#tab-content" onclick="setActiveTab(this)">Schedule</a>
+				{% if user.selected_club.owner.pk == user.pk %}
+					<a role="tab" class="text-lg tab" hx-get="{% url 'manage-tab' %}" hx-target="#tab-content" onclick="setActiveTab(this)">Manage your club</a>
+				{% endif %}
 			</div>
 
 			<div id="tab-content">

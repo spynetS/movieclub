@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="" data-theme="sunset">
+<html class="no-js" lang="" data-theme="forest">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -19,9 +19,10 @@
 
 		{% include 'components/navbar.html' %}
 
-		{% block display %}
-		{% endblock %}
-
+		<div class="min-h-screen pt-20 w-screen">
+			{% block display %}
+			{% endblock %}
+		</div>
 		<footer class="footer sm:footer-horizontal bg-neutral text-neutral-content p-10">
 			<nav>
 				<h6 class="footer-title">Services</h6>

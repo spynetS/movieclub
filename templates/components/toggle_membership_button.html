@@ -1,0 +1,7 @@
+<button hx-swap="innerHTML" hx-post="{% url "toggle-membership" member.pk %}" class="btn btn-primary toggle-member">
+	{% if member in user.selected_club.users.all %}
+		Remove
+	{% else %}
+		Add
+	{% endif %}
+</button>

@@ -2,11 +2,10 @@
 {% extends 'base.html' %}
 
 {% block display %}
-	<div class="flex flex-row w-full relative gap-12 " >
-		<img src="{{movie.poster}}" alt="Movie poster" class="h-screen"/>
-		<div class="grid grid-cols-2 absolute left-0 w-full h-screen bg-gradient-to-l from-base-200 via-base-300 to-transparent">
-			<div>
-			</div>
+	<div class="flex flex-row w-full relative gap-12 h-full" >
+		<img src="{{movie.large_poster}}" alt="Movie poster" class=h-[calc(100vh-5rem)] "/>
+		<div class="grid left-0 bg-gradient-to-l from-black to-base-200 ">
+
 			<div class=" flex flex-col  gap-3 p-12" >
 				<h1 class="text-4xl font-bold" >{{movie.title}}</h1>
 				<div class="grid grid-cols-2" >
@@ -60,42 +59,42 @@
 					hx-post="{% url "create-or-update-rating" movie.pk %}"
 					hx-target="body"
 				>
-					<div>
+					<div class="flex flex-col gap-1">
 						<label for="look" class="label">
 							<span class="label-text">Cinematic Look</span>
 						</label>
 						<input type="number" id="look" step="0.01" value="{{rating.look}}" name="look" placeholder="Cinematic Look" class="input input-bordered w-full max-w-xs" />
 					</div>
 
-					<div>
+					<div class="flex flex-col gap-1">
 						<label for="script" class="label">
 							<span class="label-text">Script</span>
 						</label>
 						<input type="number" id="script" step="0.01" value="{{rating.script}}" name="script" placeholder="Script" class="input input-bordered w-full max-w-xs" />
 					</div>
 
-					<div>
+					<div class="flex flex-col gap-1">
 						<label for="acting" class="label">
 							<span class="label-text">Acting</span>
 						</label>
 						<input type="number" id="acting" step="0.01" value="{{rating.acting}}" name="acting" placeholder="Acting" class="input input-bordered w-full max-w-xs" />
 					</div>
 
-					<div>
+					<div class="flex flex-col gap-1">
 						<label for="soundtrack" class="label">
 							<span class="label-text">Soundtrack</span>
 						</label>
 						<input type="number" id="soundtrack" step="0.01" value="{{rating.soundtrack}}" name="soundtrack" placeholder="Soundtrack" class="input input-bordered w-full max-w-xs" />
 					</div>
 
-					<div>
+					<div class="flex flex-col gap-1">
 						<label for="bonus" class="label">
 							<span class="label-text">Bonus Score</span>
 						</label>
 						<input type="number" id="bonus" step="0.01" value="{{rating.bonus}}" name="bonus" placeholder="Bonus Score" class="input input-bordered w-full max-w-xs" />
 					</div>
 
-					<div>
+					<div class="flex flex-col gap-1">
 						<label for="overalscore" class="label">
 							<span class="label-text">Overall Score</span>
 						</label>

@@ -1,0 +1,30 @@
+<div hx-get="{% url 'manage-tab' %}" hx-swap="outerHTML" hx-trigger="reload" class="reload">
+	<div class="overflow-x-auto">
+		<table class="table">
+			<!-- head -->
+			<thead>
+				<tr>
+					<th></th>
+					<th>Name</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for member in user.selected_club.users.all %}
+				<tr class="hover:bg-base-300">
+					<th>{{forloop.counter}}</th>
+					<td>{{member.username}}</td>
+					<td>
+						<button class="btn btn-error">
+							Remove from club
+						</button>
+					</td>
+				</tr>
+				{% endfor %}
+
+				<button hx-get="{% url 'add-member-modal' %}" hx-target="body" hx-swap="afterbegin" class='btn btn-accent'>
+					Add new member
+				</button>
+			</tbody>
+		</table>
+	</div>
+</div>

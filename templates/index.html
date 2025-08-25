@@ -125,6 +125,11 @@
 			</script>
 
 			<p class="text-2xl font-semibold" >Polls</p>
+			{% if user.selected_club.next_movie %}
+			{% else %}
+				<a href="{% url "clubs" %}" class="btn btn-accent w-fit">Vote for the movie you want to watch</a>
+			{% endif %}
+
 			<div class="bg-base-300 rounded-lg w-full flex flex-col" >
 				{% include "components/movies-votes.html" with movies=user.selected_club.vote_movies.all %}
 			</div>

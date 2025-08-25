@@ -1,5 +1,5 @@
 from django import forms
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 
 from clubs.models import *
@@ -70,3 +70,30 @@ def pick_movie(request, club_pk):
     club: Club = get_object_or_404(Club,pk=club_pk)
     club.pick_movie()
     return HttpResponse("Done")
+
+def club(request):
+    if request.method == "POST":
+        club: Club = Club(
+            name=request.POST['name'],
+            owner=request.user)
+        club.save()
+        club.users.add(request.user)
+        club.save()
+
+        return HttpResponse("Created "+club.name)
+    return Http404()
+
+def toggle_membership(request,user_pk):
+
+    club: Club = request.user.selected_club
+    user:Profile = Profile.objects.get(pk=user_pk)
+
+    if user in club.users.all():
+        club.users.remove(user)
+        text='Add'
+    else:
+        club.users.add(user)
+        text="Remove"
+    club.save()
+
+    return HttpResponse(text)

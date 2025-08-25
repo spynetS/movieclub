@@ -1,6 +1,19 @@
 {% extends "base.html" %}
 {% block display %}
 
+	<!-- You can open the modal using ID.showModal() method -->
+	<dialog id="my_modal_3" class="modal">
+		<div class="modal-box">
+			<form method="dialog">
+				<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+			</form>
+			<form hx-post="{% url "club" %}" >
+
+				<input type="text" name="name" value="" placeholder="club name" class="input input-borderd"/>
+				<input type="submit" value="Create" class="btn btn-accent" />
+			</form>
+		</div>
+	</dialog>
 
 	<div class="container mx-auto pt-12 grid grid-cols-2 gap-12">
 		<div class="flex flex-col items-center bg-base-200" >
@@ -10,17 +23,24 @@
 				</div>
 			</div>
 			<p class="text-xl font-bold mt-2">{{user.username}}</p>
-			<p class="text-xl font-bold mt-2">2{{user.email}}</p>
+			<p class="text-xl font-bold mt-2">{{user.email}}</p>
 			<p class="text-sm mt-2">Joined: {{user.date_joined}}</p>
-			<ul>
+			<ul class="mt-2 bg-base-100 p-4 rounded-lg flex flex-col items-center" >
 				{% for club in user.clubs.all %}
-					<li>{{club.name}}</li>
+					<li>
+						<a href="">{{club.name}}</a>
+					</li>
 				{% endfor %}
+				<button onclick="my_modal_3.showModal()" class="btn btn-accent" >
+					Create new club
+				</button>
+
 
 			</ul>
 		</div>
 		<div class="">
 			<h2 class="text-3xl font-bold mb-4">My Movies</h2>
+
 			<ul class="list bg-neutral rounded-box shadow-md">
 				<!--
 					 <li class="p-4 pb-2 text-xs opacity-60 tracking-wide">Most played songs this week</li>
