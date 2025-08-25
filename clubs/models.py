@@ -46,24 +46,32 @@ class Club(models.Model):
 
     def pick_movie(self):
         if self.vote_movies.count() <= 0:
-            raise Exception("No votes has been iniziated")
+            raise Exception("No votes have been initiated")
 
         votes = Vote.objects.filter(club=self)
+        if votes.count() <= 0:
+            # No votes have been cast, so pick a random movie from the club's available movies
+            movie = self.vote_movies.order_by("?").first()
+            if not movie:
+                raise Exception("No movies available to pick")
+            self.next_movie = movie
+            self.vote_movies.clear()
+            self.save()
+            return
+
         voted = {}
         for vote in votes:
-            if str(vote.movie.pk) in voted.keys():
-                voted[str(vote.movie.pk)] = voted[str(vote.movie.pk)]+1
-            else:
-                voted[str(vote.movie.pk)] = 1
+            key = str(vote.movie.pk)
+            voted[key] = voted.get(key, 0) + 1
 
-        print(voted)
-        key_with_most = max(voted, key=voted.get)
-        print(key_with_most)
-        movie: Movie = get_object_or_404(Movie,pk=key_with_most)
+            print(voted)
+            key_with_most = max(voted, key=voted.get)
+            print(key_with_most)
+            movie: Movie = get_object_or_404(Movie, pk=key_with_most)
 
-        self.next_movie = movie;
+        self.next_movie = movie
+        self.vote_movies.clear()
         self.save()
-
 
 
     def pick_votes(self):
