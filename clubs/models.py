@@ -81,8 +81,8 @@ class Club(models.Model):
         self.past_movies.add(self.next_movie)
         self.next_movie = None
 
-        # Iterate over the queryset of users.
-        for member in self.users.all():
+        count = 0
+        for member in self.users.order_by("?"):
             # Check if the user's movie list is not empty.
             if member.movie_list.exists():
                 # Get a single random movie from the user's list.
@@ -91,6 +91,8 @@ class Club(models.Model):
                 # Add the movie to the vote_movies list.
                 if random_movie:
                     self.vote_movies.add(random_movie)
+            count += 1
+            if count == 4: break
 
         # Save the changes to the instance.
         self.save()

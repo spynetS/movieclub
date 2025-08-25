@@ -48,8 +48,9 @@ def schedule(request, club_pk):
 def set_selected_club(request):
     user: Profile = request.user
     club: Club = Club.objects.get(pk=int(request.POST['selected_club']))
-    user.selected_club = club
-    user.save()
+    if user in club.users.all():
+        user.selected_club = club
+        user.save()
     return redirect(request.POST['current_path'])
 
 def votes(request, movie_pk):
