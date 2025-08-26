@@ -7,15 +7,18 @@
     </a>
 
     <div hx-boost="true" class="flex flex-row items-center justify-center gap-5" id="nav-links">
+        {% if user.is_authenticated %}
         <a href="{% url 'dashboard' %}" class="nav-link">Dashboard</a>
         <a href="{% url 'clubs' %}" class="nav-link">Club</a>
         <a href="{% url 'movies' %}" class="nav-link">Movies</a>
-        <a href="" class="nav-link">Schedule</a>
         <a href="{% url 'profile' %}" class="nav-link">Profile</a>
+        {% endif %}
     </div>
 
     <div class="flex justify-center items-center">
-        <form hx-push-url="true" hx-on::after-swap="startClock()" hx-post="{% url "set-selected-club" %}" hx-trigger="input" hx-target="body">
+        {% if user.is_authenticated %}
+
+            <form hx-push-url="true" hx-on::after-swap="startClock()" hx-post="{% url "set-selected-club" %}" hx-trigger="input" hx-target="body">
             <select name="selected_club" class="select">
                 <option disabled selected>
                     Select club to be active
@@ -34,7 +37,7 @@
             </select>
             <input type="text" name="current_path" class="hidden" value="{{request.path}}" />
         </form>
-        
+        {% endif %}
     </div>
 
     <script>
