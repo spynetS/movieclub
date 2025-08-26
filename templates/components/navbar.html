@@ -1,12 +1,12 @@
 {% load static %}
-<nav class="p-5 grid grid-cols-3 absolute top-0 h-20 bg-base-200 w-full">
-    <a href="{% url 'dashboard' %}" class="flex flex-row items-center gap-2">
+<nav class="p-5 grid grid-cols-2 md:grid-cols-3 absolute top-0 h-20 bg-base-200 w-full">
+    <a href="{% url 'dashboard' %}" class="hidden md:flex flex-row items-center gap-2">
         <img src="{% static "logo.png" %}" alt="" />
         <p class='font-bold text-3xl'>MOVIECLUB</p>
         <p class="font-bold text-3xl text-accent">HUB</p>
     </a>
 
-    <div hx-boost="true" class="flex flex-row items-center justify-center gap-5" id="nav-links">
+    <div hx-boost="true" class="flex flex-row items-center justify-center gap-2 md:gap-5" id="nav-links">
         {% if user.is_authenticated %}
         <a href="{% url 'dashboard' %}" class="nav-link">Dashboard</a>
         <a href="{% url 'clubs' %}" class="nav-link">Club</a>
