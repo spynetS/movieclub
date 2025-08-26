@@ -1,0 +1,45 @@
+#+title: Readme
+
+
+Movieclub is a website where users can pick a movie together and then, after
+watching it, rate it.
+
+* Install and run
+*Python is needed*
+Install dependencies
+#+begin_src bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+#+end_src
+Migrate database
+#+begin_src bash
+python manage.py migrate
+#+end_src
+
+*Run django project*
+#+begin_src bash
+export OMDB_API_KEY="YOUR_API_KEY" && python manage.py runserver
+#+end_src
+
+*All commands neatly*
+#+begin_src bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+python manage.py migrate
+export OMDB_API_KEY="YOUR_API_KEY" && python manage.py runserver
+#+end_src
+
+
+* Structure
+Is a [[https:www.djangoproject.com/][django]] project with [[https:htmx.org][htmx]] and [[https://daisyui.com][daisyui]]. The *website* app contains the main
+urls for the website. The other apps contains logic and enpoints for the
+specific app's model.
+
+** OMDBI
+The [[https://www.omdbapi.com/][OMDB api]] to get movie data. It is a free api where you can get an api key.
+Add the environment key as follows so the project can access it.
+#+begin_src bash
+export OMDB_API_KEY="THE_KEY"
+#+end_src
