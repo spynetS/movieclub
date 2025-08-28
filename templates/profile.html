@@ -22,30 +22,32 @@
 					<img src="https://img.daisyui.com/images/profile/demo/yellingcat@192.webp" />
 				</div>
 			</div>
-			<p class="text-xl font-bold mt-2">{{user.username}}</p>
-			<p class="text-xl font-bold mt-2">{{user.email}}</p>
-			<p class="text-sm mt-2">Joined: {{user.date_joined}}</p>
+			<p class="text-xl font-bold mt-2">{{profile.username}}</p>
+			<p class="text-xl font-bold mt-2">{{profile.email}}</p>
+			<p class="text-sm mt-2">Joined: {{profile.date_joined}}</p>
 			<ul class="mt-2 bg-base-100 p-4 rounded-lg flex flex-col items-center" >
-				{% for club in user.clubs.all %}
+				{% for club in profile.clubs.all %}
 					<li>
 						<a href="">{{club.name}}</a>
 					</li>
 				{% endfor %}
+				{% if profile.pk == user.pk %}
 				<button onclick="my_modal_3.showModal()" class="btn btn-accent" >
 					Create new club
 				</button>
+				{% endif %}
 
 
 			</ul>
 		</div>
 		<div class="">
-			<h2 class="text-3xl font-bold mb-4">My Movies</h2>
+			<h2 class="text-3xl font-bold mb-4">{% if profile.pk == user.pk %} My {% else %} {{profile.username}}'s {% endif %} Movies</h2>
 
-			<ul class="list bg-neutral rounded-box shadow-md">
+			<ul class="list bg-neutral rounded-box shadow-md h-96 overflow-auto">
 				<!--
 					 <li class="p-4 pb-2 text-xs opacity-60 tracking-wide">Most played songs this week</li>
 				-->
-				{% for movie in user.movie_list.all %}
+				{% for movie in profile.movie_list.all %}
 				<li class="list-row" >
 						<div><img class="size-25 " src="{{movie.poster}}"/></div>
 						<div>
@@ -68,8 +70,10 @@
 
 			</ul>
 		</div>
-		<div class="col-span-2 w-full h-72 " >
-			<h2>My Reviews</h2>
+		<div class="col-span-2 w-full min-h-72 mb-4 " >
+			<h2 class="text-2xl font-semibold">
+				{% if profile.pk == user.pk %} My {% else %} {{profile.username}}'s {% endif %} Reviews
+			</h2>
 			<table class="table table-zebra w-1/2">
 			<!-- head -->
 			<thead>
@@ -88,12 +92,10 @@
 				</tr>
 			</thead>
 			<tbody>
-				{% include "components/ratings_rows.html" with ratings=user.ratings.all %}
+				{% include "components/ratings_rows.html" with ratings=profile.ratings.all %}
 			</tbody>
 			</table>
 		</div>
 	</div>
-
-
 
 {% endblock %}

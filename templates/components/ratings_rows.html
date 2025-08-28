@@ -8,8 +8,10 @@
 		</a>
 	</td>
 	<td>
+		{% if rating.movie.director %}
 		<a href="{% url "director" rating.movie.director.name %}"
 			class='link'>{{rating.movie.director.name}}</a>
+		{% endif %}
 	</td>
 	<td>{{rating.look}}</td>
 	<td>{{rating.script}}</td>

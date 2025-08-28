@@ -46,12 +46,20 @@ def director(request,name):
 def club(request):
     return render(request, "clubs.html", {})
 
+def profile_username(request,username):
+    return render(request, "profile.html",
+           {
+               'profile':Profile.objects.get(username=username)
+           })
+
+
 urlpatterns = [
     path('', index, name="dashboard"),
 
     path("clubs/", club, name="clubs"),
     path("movies/", lambda request: render(request, "movies.html", {}), name="movies"),
-    path("profile/", lambda request: render(request, "profile.html", {}), name="profile"),
+    path("profile/", lambda request: render(request, "profile.html", {'profile':request.user}), name="profile"),
+    path("profile/<str:username>", profile_username, name="profile"),
     path("movie/<str:imdb_id>",movie,name="movie"),
     path("director/<str:name>",director, name="director"),
     path("add-member-modal", add_member_modal, name="add-member-modal")
