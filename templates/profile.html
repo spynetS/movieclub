@@ -68,6 +68,30 @@
 
 			</ul>
 		</div>
+		<div class="col-span-2 w-full h-72 " >
+			<h2>My Reviews</h2>
+			<table class="table table-zebra w-1/2">
+			<!-- head -->
+			<thead>
+				<tr>
+					<th></th>
+					<th>Poster</th>
+					<th>Movie title</th>
+					<th>Movie Director</th>
+					<th>Average Look</th>
+					<th>Average Script</th>
+					<th>Average Acting</th>
+					<th>Average Soundtrack</th>
+					<th>Average Overalscore</th>
+					<th>Average Bonus</th>
+					<th>Avrage Sum</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% include "components/ratings_rows.html" with ratings=user.ratings.all %}
+			</tbody>
+			</table>
+		</div>
 	</div>
 
 
