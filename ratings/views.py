@@ -4,6 +4,12 @@ from django.shortcuts import get_object_or_404, redirect, render
 from movies.models import Movie
 from .models import Rating
 
+def is_valid_rating(value):
+    try:
+        number = float(value)
+        return 0 <= number <= 10
+    except (ValueError, TypeError):
+        return False
 # Create your views here.
 def create_or_update_rating(request: HttpRequest, movie_pk) -> HttpResponse:
     """
@@ -22,24 +28,32 @@ def create_or_update_rating(request: HttpRequest, movie_pk) -> HttpResponse:
         overall_score = request.POST.get('overalscore')
         description = request.POST.get('description')
 
+        # Validate ratings
+        if not all([
+                is_valid_rating(look_rating),
+                is_valid_rating(script_rating),
+                is_valid_rating(acting_rating),
+                is_valid_rating(soundtrack_rating),
+                is_valid_rating(bonus_rating),
+                is_valid_rating(overall_score)
+        ]):
+            # Handle error, e.g. return an error response or show a message
+            return HttpResponseBadRequest("All ratings must be numbers between 0 and 10.")+
 
-        try:
+        rating, created = Rating.objects.get_or_create(
+            user=user_profile,
+            movie=movie,
+            defaults={
+                'look': look_rating,
+                'script': script_rating,
+                'acting': acting_rating,
+                'soundtrack': soundtrack_rating,
+                'bonus': bonus_rating,
+                'overalscore': overall_score,
+                'description': description,
+            }
+        )
 
-            rating, created = Rating.objects.get_or_create(
-                user=user_profile,
-                movie=movie,
-                defaults={
-                    'look': look_rating,
-                    'script': script_rating,
-                    'acting': acting_rating,
-                    'soundtrack': soundtrack_rating,
-                    'bonus': bonus_rating,
-                    'overalscore': overall_score,
-                    'description': description,
-                }
-            )
-        except:
-            return HttpResponse("Cant do that!")
 
 
         # If the rating already existed, update its values
