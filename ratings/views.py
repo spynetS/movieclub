@@ -22,20 +22,25 @@ def create_or_update_rating(request: HttpRequest, movie_pk) -> HttpResponse:
         overall_score = request.POST.get('overalscore')
         description = request.POST.get('description')
 
-        # Use get_or_create with lookup arguments
-        rating, created = Rating.objects.get_or_create(
-            user=user_profile,
-            movie=movie,
-            defaults={
-                'look': look_rating,
-                'script': script_rating,
-                'acting': acting_rating,
-                'soundtrack': soundtrack_rating,
-                'bonus': bonus_rating,
-                'overalscore': overall_score,
-                'description': description,
-            }
-        )
+
+        try:
+
+            rating, created = Rating.objects.get_or_create(
+                user=user_profile,
+                movie=movie,
+                defaults={
+                    'look': look_rating,
+                    'script': script_rating,
+                    'acting': acting_rating,
+                    'soundtrack': soundtrack_rating,
+                    'bonus': bonus_rating,
+                    'overalscore': overall_score,
+                    'description': description,
+                }
+            )
+        except:
+            return HttpResponse("Cant do that!")
+
 
         # If the rating already existed, update its values
         if not created:
