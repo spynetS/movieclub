@@ -96,3 +96,7 @@ class Club(models.Model):
 
         # Save the changes to the instance.
         self.save()
+
+    def top5_rated(self):
+        movies:Movie = self.past_movies
+        return movies
