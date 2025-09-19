@@ -81,18 +81,22 @@ class Club(models.Model):
         self.past_movies.add(self.next_movie)
         self.next_movie = None
 
-        count = 0
+        #count = 0
         for member in self.users.order_by("?"):
             # Check if the user's movie list is not empty.
             if member.movie_list.exists():
                 # Get a single random movie from the user's list.
-                random_movie = member.movie_list.order_by('?').first()
-
+                random_movie = (
+                    member.movie_list
+                    .exclude(pk__in=self.past_movies.values_list("pk", flat=True))
+                    .order_by("?")
+                    .first()
+                )
                 # Add the movie to the vote_movies list.
                 if random_movie:
                     self.vote_movies.add(random_movie)
-            count += 1
-            if count == 4: break
+            #count += 1
+            #if count == 4: break
 
         # Save the changes to the instance.
         self.save()
