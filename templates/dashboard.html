@@ -100,12 +100,12 @@
 		<div class="bg-base-300 rounded-lg p-6">
 			<h2 class="text-2xl md:text-3xl font-bold">Best rated movie</h2>
 			{% for movie in user.selected_club.top5_rated.all %}
-				<div class="bg-base-200 p-3 rounded-xl flex flex-row items-center gap-12  " >
+				<div class="bg-base-200 p-3 rounded-xl flex md:flex-row items-center md:gap-12 gap-2  " >
 					<img src="{{movie.poster}}" alt="Poster" class="w-18 mb-3" />
 					<div class="h-full w-full flex flex-col justify-between">
-						<a href="{% url 'movie' movie.imdb_id %}" class="link text-xl font-semibold mb-2">{{movie.title}}</a>
+						<a href="{% url 'movie' movie.imdb_id %}" class="link md:text-xl font-semibold mb-2">{{movie.title}}</a>
 						<p class="text-sm mb-2">{{movie.year}}</p>
-						<div class="rating">
+						<div class="rating hidden md:flex">
 							{% for star in "1234567890" %}
 								{% if movie.get_average_rating %}
 									{% include 'components/star.html' with rating=movie.get_average_rating.avg_total index=forloop.counter %}
