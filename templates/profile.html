@@ -52,8 +52,12 @@
 							<a class="link " href="{% url 'movie' movie.imdb_id %}">
 								{{movie.title}}</a>
 							<div class="text-xs uppercase font-semibold opacity-60">
-								{% if movie.director and movie.director.name != "N/A" %}
+								{% if movie.director %}
+                {% if movie.director.name != "N/A" %}
 								<a href="{% url 'director' movie.director.name %}" class="link">{{movie.director}}</a>
+                {% else %}
+                <p class="link">{{movie.director}}</p>
+								{% endif %}
 								{% endif %}
 							</div>
 						</div>
