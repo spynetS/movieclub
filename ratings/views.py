@@ -38,7 +38,7 @@ def create_or_update_rating(request: HttpRequest, movie_pk) -> HttpResponse:
                 is_valid_rating(overall_score)
         ]):
             # Handle error, e.g. return an error response or show a message
-            return HttpResponseBadRequest("All ratings must be numbers between 0 and 10.")+
+            return HttpResponseBadRequest("All ratings must be numbers between 0 and 10.")
 
         rating, created = Rating.objects.get_or_create(
             user=user_profile,

@@ -1,30 +1,32 @@
 {% for rating in ratings %}
-<tr class="hover" >
-	<th>{{rating.pk}}</th>
-	<th><img src="{{rating.movie.poster}}" alt="" class="w-12 h-12" /></th>
-	<td>
-		<a href="{% url "movie" rating.movie.imdb_id %}" class="link">
-			{{rating.movie.title}}
-		</a>
-	</td>
-	<td>
-		{% if rating.movie.director %}
-		<a href="{% url "director" rating.movie.director.name %}"
-			class='link'>{{rating.movie.director.name}}</a>
-		{% endif %}
-	</td>
-	<td>{{rating.look}}</td>
-	<td>{{rating.script}}</td>
-	<td>{{rating.acting}}</td>
-	<td>{{rating.soundtrack}}</td>
-	<td>{{rating.bonus}}</td>
-	<td>{{rating.overalscore}}</td>
-	{% if description %}
-		<td class="truncate">{{rating.description}}</td>
+	{% if rating.look %}
+		<tr class="hover" >
+			<th>{{rating.pk}}</th>
+			<th><img src="{{rating.movie.poster}}" alt="" class="w-12 h-12" /></th>
+			<td>
+				<a href="{% url "movie" rating.movie.imdb_id %}" class="link">
+					{{rating.movie.title}}
+				</a>
+			</td>
+			<td>
+				{% if rating.movie.director %}
+					<a href="{% url "director" rating.movie.director.name %}"
+							 class='link'>{{rating.movie.director.name}}</a>
+				{% endif %}
+			</td>
+			<td>{{rating.look}}</td>
+			<td>{{rating.script}}</td>
+			<td>{{rating.acting}}</td>
+			<td>{{rating.soundtrack}}</td>
+			<td>{{rating.bonus}}</td>
+			<td>{{rating.overalscore}}</td>
+			{% if description %}
+				<td class="truncate">{{rating.description}}</td>
+			{% endif %}
+			<td>{{rating.average}}</td>
+			{% if edit %}
+				<td><a href="/account/edit/{{rating.pk}}" class="link link-primary" >Edit</a></td>
+			{% endif %}
+		</tr>
 	{% endif %}
-	<td>{{rating.average}}</td>
-	{% if edit %}
-		<td><a href="/account/edit/{{rating.pk}}" class="link link-primary" >Edit</a></td>
-	{% endif %}
-</tr>
 {% endfor %}
